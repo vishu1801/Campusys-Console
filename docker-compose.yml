@@ -1,0 +1,11 @@
+services:
+  app:
+    build:
+      context: .
+      target: development
+    ports:
+      - "${PORT:-5183}:5173"
+    environment:
+      NODE_ENV: development
+      VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://localhost:8080}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS:-localhost}
