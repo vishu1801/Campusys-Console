@@ -23,6 +23,9 @@ export default function Sidebar() {
         <NavLink to="/buttons" className={linkClass}>
           Buttons
         </NavLink>
+        <NavLink to="/templates" className={linkClass}>
+          Email Templates
+        </NavLink>
       </nav>
     </aside>
   )
