@@ -42,13 +42,14 @@ function ButtonSection({
               <th className="px-4 py-2 font-medium">Name</th>
               <th className="px-4 py-2 font-medium">Order</th>
               <th className="px-4 py-2 font-medium">Active</th>
+              <th className="px-4 py-2 font-medium">Permissions</th>
               <th className="px-4 py-2 font-medium"></th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 dark:divide-gray-800 bg-white dark:bg-gray-950">
             {buttons.length === 0 && (
               <tr>
-                <td colSpan={4} className="px-4 py-6 text-center text-gray-400">
+                <td colSpan={5} className="px-4 py-6 text-center text-gray-400">
                   {emptyLabel}
                 </td>
               </tr>
@@ -58,6 +59,9 @@ function ButtonSection({
                 <td className="px-4 py-2">{btn.displayName}</td>
                 <td className="px-4 py-2">{btn.displayOrder ?? '—'}</td>
                 <td className="px-4 py-2">{btn.isActive ? 'Yes' : 'No'}</td>
+                <td className="px-4 py-2 text-xs text-gray-500 dark:text-gray-400">
+                  {btn.permissions.length > 0 ? btn.permissions.map((p) => p.code).join(', ') : '—'}
+                </td>
                 <td className="px-4 py-2 text-right">
                   <button
                     onClick={() => onEdit(btn)}

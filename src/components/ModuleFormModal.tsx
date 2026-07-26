@@ -19,6 +19,7 @@ export default function ModuleFormModal({
   const [name, setName] = useState(module?.name ?? '')
   const [displayName, setDisplayName] = useState(module?.displayName ?? '')
   const [description, setDescription] = useState(module?.description ?? '')
+  const [enforcePermissions, setEnforcePermissions] = useState(module?.enforcePermissions ?? false)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -27,7 +28,12 @@ export default function ModuleFormModal({
     setSubmitting(true)
     setError(null)
     try {
-      const payload = { name, displayName, description: description || undefined }
+      const payload = {
+        name,
+        displayName,
+        description: description || undefined,
+        enforcePermissions,
+      }
       if (module) {
         await updateModule(module.id, payload)
       } else {
@@ -81,6 +87,21 @@ export default function ModuleFormModal({
             className={inputClass}
             rows={2}
           />
+        </div>
+        <div>
+          <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
+            <input
+              type="checkbox"
+              checked={enforcePermissions}
+              onChange={(e) => setEnforcePermissions(e.target.checked)}
+              className="rounded border-gray-300 dark:border-gray-700"
+            />
+            Enforce permissions
+          </label>
+          <p className="mt-1 text-xs text-gray-400">
+            When enabled, a group must be explicitly granted access to this module's pages and
+            buttons — otherwise access is allowed by default.
+          </p>
         </div>
 
         {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}

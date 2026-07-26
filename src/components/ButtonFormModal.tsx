@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import Modal from './Modal'
 import { createButton, updateButton, type ButtonType, type PageButton } from '../api/buttons'
+import PermissionPicker from './PermissionPicker'
 
 const inputClass =
   'mt-1 w-full rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500'
@@ -30,6 +31,7 @@ export default function ButtonFormModal({
     button?.displayOrder != null ? String(button.displayOrder) : '',
   )
   const [isActive, setIsActive] = useState(button?.isActive ?? true)
+  const [permissionIds, setPermissionIds] = useState(button?.permissions.map((p) => p.id) ?? [])
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -46,6 +48,7 @@ export default function ButtonFormModal({
         displayOrder: displayOrder ? Number(displayOrder) : undefined,
         isActive,
         pageId,
+        permissionIds,
       }
       if (button) {
         await updateButton(button.id, payload)
@@ -65,7 +68,7 @@ export default function ButtonFormModal({
       title={isEditing ? `Edit ${button!.displayName}` : `New button on ${pageDisplayName}`}
       onClose={onClose}
     >
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4 max-h-[70vh] overflow-y-auto pr-1">
         <div>
           <label className={labelClass} htmlFor="button-name">
             Name
@@ -142,6 +145,13 @@ export default function ButtonFormModal({
           />
           Active
         </label>
+        <div>
+          <label className={labelClass}>Permissions</label>
+          <p className="mt-1 mb-1 text-xs text-gray-400">
+            Only enforced when the button's page module has "Enforce permissions" enabled.
+          </p>
+          <PermissionPicker selectedIds={permissionIds} onChange={setPermissionIds} />
+        </div>
 
         {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
 

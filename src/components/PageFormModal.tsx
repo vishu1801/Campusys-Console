@@ -3,6 +3,7 @@ import Modal from './Modal'
 import { collectDescendantIds, createPage, flattenPages, updatePage, type Page } from '../api/pages'
 import { useModules } from '../context/ModulesContext'
 import type { AppModule } from '../api/modules'
+import PermissionPicker from './PermissionPicker'
 
 const inputClass =
   'mt-1 w-full rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500'
@@ -29,6 +30,7 @@ export default function PageFormModal({
   )
   const [isActive, setIsActive] = useState(page?.isActive ?? true)
   const [parentId, setParentId] = useState(page?.parentId ?? '')
+  const [permissionIds, setPermissionIds] = useState(page?.permissions.map((p) => p.id) ?? [])
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -50,6 +52,7 @@ export default function PageFormModal({
         isActive,
         appModuleId: module.id,
         parentId: parentId || null,
+        permissionIds,
       }
       if (page) {
         await updatePage(page.id, payload)
@@ -175,6 +178,13 @@ export default function PageFormModal({
           />
           Active
         </label>
+        <div>
+          <label className={labelClass}>Permissions</label>
+          <p className="mt-1 mb-1 text-xs text-gray-400">
+            Only enforced when the module has "Enforce permissions" enabled.
+          </p>
+          <PermissionPicker selectedIds={permissionIds} onChange={setPermissionIds} />
+        </div>
 
         {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
 

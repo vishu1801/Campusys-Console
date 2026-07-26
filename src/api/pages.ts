@@ -1,4 +1,5 @@
 import { apiClient } from './client'
+import type { Permission } from './permissions'
 
 export interface Page {
   id: string
@@ -14,6 +15,7 @@ export interface Page {
   parentId: string | null
   parentName: string | null
   subPages: Page[]
+  permissions: Permission[]
   createdAt: string
   updatedAt: string
 }
@@ -28,6 +30,7 @@ export interface PageRequest {
   isActive?: boolean
   appModuleId: string
   parentId?: string | null
+  permissionIds: string[]
 }
 
 export async function createPage(payload: PageRequest): Promise<Page> {
