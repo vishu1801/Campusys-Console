@@ -26,6 +26,9 @@ export default function Sidebar() {
         <NavLink to="/templates" className={linkClass}>
           Email Templates
         </NavLink>
+        <NavLink to="/users" className={linkClass}>
+          Users
+        </NavLink>
       </nav>
     </aside>
   )
