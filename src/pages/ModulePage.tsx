@@ -51,6 +51,10 @@ export default function ModulePage() {
           {module.description && (
             <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{module.description}</p>
           )}
+          <p className="mt-1 text-xs text-gray-400">
+            Permissions {module.enforcePermissions ? 'are enforced' : 'are not enforced'} for this
+            module.
+          </p>
         </div>
         <button
           onClick={() => setShowCreatePage(true)}
@@ -69,13 +73,14 @@ export default function ModulePage() {
               <th className="px-4 py-2 font-medium">Order</th>
               <th className="px-4 py-2 font-medium">Active</th>
               <th className="px-4 py-2 font-medium">Parent</th>
+              <th className="px-4 py-2 font-medium">Permissions</th>
               <th className="px-4 py-2 font-medium"></th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 dark:divide-gray-800 bg-white dark:bg-gray-950">
             {sortedPages.length === 0 && (
               <tr>
-                <td colSpan={6} className="px-4 py-6 text-center text-gray-400">
+                <td colSpan={7} className="px-4 py-6 text-center text-gray-400">
                   No pages in this module yet.
                 </td>
               </tr>
@@ -87,6 +92,11 @@ export default function ModulePage() {
                 <td className="px-4 py-2">{page.displayOrder ?? '—'}</td>
                 <td className="px-4 py-2">{page.isActive ? 'Yes' : 'No'}</td>
                 <td className="px-4 py-2">{page.parentName ?? '—'}</td>
+                <td className="px-4 py-2 text-xs text-gray-500 dark:text-gray-400">
+                  {page.permissions.length > 0
+                    ? page.permissions.map((p) => p.code).join(', ')
+                    : '—'}
+                </td>
                 <td className="px-4 py-2 text-right">
                   <button
                     onClick={() => setEditingPage(page)}

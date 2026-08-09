@@ -1,4 +1,5 @@
 import { apiClient } from './client'
+import type { Permission } from './permissions'
 
 export type ButtonType = 'PAGE' | 'ROW'
 
@@ -13,6 +14,7 @@ export interface PageButton {
   pageId: string
   pageName: string
   pageDisplayName: string
+  permissions: Permission[]
   createdAt: string
   updatedAt: string
 }
@@ -25,6 +27,7 @@ export interface PageButtonRequest {
   displayOrder?: number
   isActive?: boolean
   pageId: string
+  permissionIds: string[]
 }
 
 export async function listButtonsByPage(pageId: string): Promise<PageButton[]> {

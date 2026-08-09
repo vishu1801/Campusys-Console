@@ -29,6 +29,9 @@ export default function Sidebar() {
         <NavLink to="/users" className={linkClass}>
           Users
         </NavLink>
+        <NavLink to="/permissions" className={linkClass}>
+          Permissions
+        </NavLink>
       </nav>
     </aside>
   )

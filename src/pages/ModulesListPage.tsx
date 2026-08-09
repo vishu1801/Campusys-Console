@@ -32,13 +32,14 @@ export default function ModulesListPage() {
                 <th className="px-4 py-2 font-medium">Name</th>
                 <th className="px-4 py-2 font-medium">Description</th>
                 <th className="px-4 py-2 font-medium">Pages</th>
+                <th className="px-4 py-2 font-medium">Enforced</th>
                 <th className="px-4 py-2 font-medium"></th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 dark:divide-gray-800 bg-white dark:bg-gray-950">
               {modules.length === 0 && (
                 <tr>
-                  <td colSpan={4} className="px-4 py-6 text-center text-gray-400">
+                  <td colSpan={5} className="px-4 py-6 text-center text-gray-400">
                     No modules yet.
                   </td>
                 </tr>
@@ -57,6 +58,7 @@ export default function ModulesListPage() {
                     {mod.description || '—'}
                   </td>
                   <td className="px-4 py-2">{mod.pages.length}</td>
+                  <td className="px-4 py-2">{mod.enforcePermissions ? 'Yes' : 'No'}</td>
                   <td className="px-4 py-2 text-right">
                     <button
                       onClick={() => setEditingModule(mod)}

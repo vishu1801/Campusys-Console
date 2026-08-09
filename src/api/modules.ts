@@ -6,6 +6,7 @@ export interface AppModule {
   name: string
   displayName: string
   description: string | null
+  enforcePermissions: boolean
   pages: Page[]
   createdAt: string
   updatedAt: string
@@ -15,6 +16,7 @@ export interface AppModuleRequest {
   name: string
   displayName: string
   description?: string
+  enforcePermissions: boolean
 }
 
 export async function listModules(): Promise<AppModule[]> {
